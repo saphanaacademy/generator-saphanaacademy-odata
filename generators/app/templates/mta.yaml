@@ -1,0 +1,75 @@
+_schema-version: '3.1'
+ID: <%= projectName %>
+version: 0.0.1
+parameters:
+  enable-parallel-deployments: true
+
+build-parameters:
+  before-all:
+   - builder: custom
+     commands:
+      - npm install --production
+      - npx -p @sap/cds-dk cds build --production
+
+modules:
+ - name: <%= projectName %>-srv
+   type: nodejs
+   path: gen/srv
+   parameters:
+    memory: 256M
+    disk-quota: 512M
+   requires:
+<% if(auth){ -%>
+    - name: <%= projectName %>-uaa
+<% } -%>
+    - name: <%= projectName %>-db
+   provides:
+    - name: srv-api
+      properties:
+        srv-url: ${default-url}
+ - name: <%= projectName %>-db-deployer
+   type: hdb
+   path: gen/db
+   parameters:
+    memory: 256M
+    disk-quota: 512M
+   requires:
+    - name: <%= projectName %>-db
+    - name: <%= projectName %>-db-<%= schemaName %>
+<% if(auth){ -%>
+ - name: <%= projectName %>-app
+   type: html5
+   path: app
+   parameters:
+    memory: 256M
+    disk-quota: 512M
+   requires:
+    - name: <%= projectName %>-uaa
+    - name: srv-api
+      group: destinations
+      properties:
+        name: srv
+        url: ~{srv-url}
+        forwardAuthToken: true
+<% } -%>
+
+resources:
+<% if(auth){ -%>
+ - name: <%= projectName %>-uaa
+   type: org.cloudfoundry.managed-service
+   parameters:
+     path: ./xs-security.json
+     service-plan: application
+     service: xsuaa
+<% } -%>
+ - name: <%= projectName %>-db
+   type: com.sap.xs.hdi-container
+   parameters:
+     service: hana
+     service-plan: hdi-shared
+   properties:
+     hdi-service-name: ${service-name}
+ - name: <%= projectName %>-db-<%= schemaName %>
+   type: org.cloudfoundry.existing-service
+   parameters:
+     service-name: <%= projectName %>-db-<%= schemaName %>

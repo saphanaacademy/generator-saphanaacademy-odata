@@ -1,0 +1,50 @@
+{
+  "xsappname": "<%= projectName %>",
+  "tenant-mode": "dedicated",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.write",
+      "description": "write access"
+    },
+    {
+      "name": "$XSAPPNAME.read",
+      "description": "read access"
+    }
+  ],
+  "attributes": [],
+  "role-templates": [
+    {
+      "name": "write",
+      "description": "write access",
+      "scope-references": [
+        "$XSAPPNAME.write"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "read",
+      "description": "read access",
+      "scope-references": [
+        "$XSAPPNAME.read"
+      ],
+      "attribute-references": []
+    }
+  ],
+  "role-collections": [
+    {
+      "name": "<%= projectName %>_write",
+      "description": "Write Access",
+      "role-template-references": [
+        "$XSAPPNAME.write",
+        "$XSAPPNAME.read"
+      ]
+    },
+    {
+      "name": "<%= projectName %>_read",
+      "description": "Read Access",
+      "role-template-references": [
+        "$XSAPPNAME.read"
+      ]
+    }
+  ]
+}

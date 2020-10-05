@@ -1,0 +1,39 @@
+{
+    "name": "<%= projectName %>",
+    "version": "0.0.1",
+    "dependencies": {
+        "@sap/cds": "^4",
+<% if(v2support){ -%>
+        "@sap/cds-odata-v2-adapter-proxy": "^1.4.46",
+<% } -%>
+        "@sap/hana-client": "^2.6.54",
+<% if(auth){ -%>
+        "@sap/xsenv": "^3.0.0",
+        "@sap/xssec": "^3.0.10",
+        "@sap/audit-logging": "^3.2.0",
+        "passport": "^0.4.1",
+<% } -%>
+        "express": "^4"
+    },
+    "devDependencies": {
+    },
+    "scripts": {
+        "start": "npx cds run"
+    },
+    "cds": {
+        "requires": {
+            "db": {
+                "kind": "hana"
+            }
+<% if(auth){ -%>
+            ,
+            "uaa": {
+                "kind": "xsuaa"
+            }
+<% } -%>
+        },
+        "hana": {
+            "deploy-format": "hdbtable"
+        }
+    }
+}

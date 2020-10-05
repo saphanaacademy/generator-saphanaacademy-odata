@@ -1,0 +1,11 @@
+{
+    "authenticationMethod": "route",
+    "routes": [
+        {
+            "source": "^/(.*)",
+            "authenticationType": "xsuaa",
+            "scope": "$XSAPPNAME.read",
+            "destination": "srv"
+        }
+    ]
+}
