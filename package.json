@@ -1,6 +1,6 @@
 {
   "name": "generator-saphanaacademy-odata",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Yeoman Generator for creating SAP HANA OData services",
   "homepage": "https://www.youtube.com/saphanaacademy",
   "author": {
@@ -24,10 +24,13 @@
   ],
   "devDependencies": {
     "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.6.0",
     "eslint-config-xo": "^0.29.1",
+    "eslint-plugin-prettier": "^3.1.4",
     "husky": "^4.2.5",
     "jest": "^25.4.0",
     "lint-staged": "^10.2.11",
+    "prettier": "^2.0.5",
     "yeoman-assert": "^3.1.0",
     "yeoman-test": "^2.4.1"
   },
@@ -46,17 +49,15 @@
   },
   "lint-staged": {
     "*.js": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ],
     "*.json": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": ""
     }
   },
   "eslintConfig": {

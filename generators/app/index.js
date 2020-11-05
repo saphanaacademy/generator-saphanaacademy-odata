@@ -2,7 +2,6 @@
 const Generator = require("yeoman-generator");
 const path = require("path");
 const glob = require("glob");
-const { doesNotMatch } = require("assert");
 
 module.exports = class extends Generator {
   prompting() {
@@ -147,22 +146,16 @@ module.exports = class extends Generator {
           i++;
         });
         hdbSynonym += "}";
-        sql = "SELECT 'T' AS object_type, table_name as object_name, column_name, data_type_name, length, scale, is_nullable, default_value, position FROM table_columns WHERE schema_name='" + answers.get('schemaName') + "' AND table_name IN(";
-        i = 0;
+        sql = "SELECT 'T' AS object_type, table_name as object_name, column_name, data_type_name, length, scale, is_nullable, default_value, position FROM table_columns WHERE schema_name='" + answers.get('schemaName') + "' AND table_name IN(''";
         resObjects.forEach(element => {
           if (element.OBJECT_TYPE === "T") {
-            if (i) sql += ",";
-            sql += "'" + element.OBJECT_NAME + "'";
-            i++;
+            sql += ",'" + element.OBJECT_NAME + "'";
           }
         });
-        sql += ") UNION SELECT 'V' AS object_type, view_name as object_name, column_name, data_type_name, length, scale, is_nullable, default_value, position FROM view_columns WHERE schema_name='" + answers.get('schemaName') + "' AND view_name IN(";
-        i = 0;
+        sql += ") UNION SELECT 'V' AS object_type, view_name as object_name, column_name, data_type_name, length, scale, is_nullable, default_value, position FROM view_columns WHERE schema_name='" + answers.get('schemaName') + "' AND view_name IN(''";
         resObjects.forEach(element => {
           if (element.OBJECT_TYPE === "V") {
-            if (i) sql += ",";
-            sql += "'" + element.OBJECT_NAME + "'";
-            i++;
+            sql += ",'" + element.OBJECT_NAME + "'";
           }
         });
         sql += ") ORDER BY object_name, position";
@@ -190,13 +183,10 @@ module.exports = class extends Generator {
             var view = { "NAME": elementO.OBJECT_NAME, "VIEW": hdbView };
             hdbViews.push(view);
           });
-          let sql = "SELECT table_name as object_name, column_name, position, is_primary_key FROM constraints WHERE schema_name='" + answers.get('schemaName') + "' AND table_name IN(";
-          i = 0;
+          let sql = "SELECT table_name as object_name, column_name, position, is_primary_key FROM constraints WHERE schema_name='" + answers.get('schemaName') + "' AND table_name IN(''";
           resObjects.forEach(element => {
             if (element.OBJECT_TYPE === "T") {
-              if (i) sql += ",";
-              sql += "'" + element.OBJECT_NAME + "'";
-              i++;
+              sql += ",'" + element.OBJECT_NAME + "'";
             }
           });
           sql += ") ORDER BY table_name, position";
