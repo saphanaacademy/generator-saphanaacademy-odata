@@ -1,16 +1,19 @@
 {
     "name": "<%= projectName %>",
     "version": "0.0.1",
+    "engines": {
+        "node": "12.x"
+    },
     "dependencies": {
-        "@sap/cds": "^4",
+        "@sap/cds": "^5",
 <% if(v2support){ -%>
-        "@sap/cds-odata-v2-adapter-proxy": "^1.4.46",
+        "@sap/cds-odata-v2-adapter-proxy": "^1",
 <% } -%>
-        "@sap/hana-client": "^2.6.54",
+        "@sap/hana-client": "^2",
 <% if(auth){ -%>
-        "@sap/xsenv": "^3.0.0",
-        "@sap/xssec": "^3.0.10",
-        "@sap/audit-logging": "^3.2.0",
+        "@sap/xsenv": "^3",
+        "@sap/xssec": "^3",
+        "@sap/audit-logging": "^5",
         "passport": "^0.4.1",
 <% } -%>
         "express": "^4"
