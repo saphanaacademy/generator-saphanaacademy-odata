@@ -1,6 +1,7 @@
 {
   "name": "generator-saphanaacademy-odata",
-  "version": "0.0.3",
+  "displayName": "SAP HANA Academy OData",
+  "version": "0.0.4",
   "description": "Yeoman Generator for creating SAP HANA OData services",
   "homepage": "https://www.youtube.com/saphanaacademy",
   "author": {
@@ -9,7 +10,8 @@
     "url": "https://www.youtube.com/saphanaacademy"
   },
   "files": [
-    "generators"
+    "generators",
+    "yeoman.png"
   ],
   "main": "generators/index.js",
   "keywords": [
